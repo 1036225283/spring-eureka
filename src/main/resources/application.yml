@@ -1,0 +1,15 @@
+server:
+  port: 7000                    # 指定该Eureka实例的端口
+eureka:
+  instance:
+    hostname: eureka-server
+    lease-renewal-interval-in-seconds: 9               #服务刷新时间配置，每隔这个时间会主动心跳一次
+    lease-expiration-duration-in-seconds: 27           #这个配置一般为服务刷新时间配置的三倍
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    eviction-interval-timer-in-ms: 6000                        #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+    response-cache-update-interval-ms: 6000                    #eureka server刷新readCacheMap的时间，注意，client读取的是readCacheMap，这个时间决定了多久会把readWriteCacheMap的缓存更新到readCacheMap上
